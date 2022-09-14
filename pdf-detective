@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+cd -P -- "$(dirname -- "${BASH_SOURCE[0]}")"
+PIPENV_PIPFILE="./Pipfile" pipenv run python3 ./pdf-detective.py "$@"
