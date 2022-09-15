@@ -23,15 +23,20 @@ url_base = 'https://hdl.handle.net/2027/'
 Pdf = namedtuple('Pdf', ['file', 'title', 'url'])
 
 pdfs = []
-for file in glob('*.pdf'):
-    with pikepdf.open(file) as pdf:
-        title = str(pdf.docinfo.Title)  # e.g. 'njp-32101048157471-21-1626472259'
-    title_parts = title.split('-')
-    url = url_base + title_parts[0] + '.' + title_parts[1]  # e.g. 'https://hdl.handle.net/2027/njp.32101048157471'
-    if args.verbose:
-        print(f'{file}\t{title}\t{url}')
+for file in sorted(glob('*.pdf')):
+    try:
+        with pikepdf.open(file) as pdf:
+            title = str(pdf.docinfo.Title)  # e.g. 'njp-32101048157471-21-1626472259'
+        title_parts = title.split('-')
+        url = url_base + title_parts[0] + '.' + title_parts[1]  # e.g. 'https://hdl.handle.net/2027/njp.32101048157471'
+        if args.verbose:
+            print(f'{file}\t{title}\t{url}')
+    except pikepdf._qpdf.PdfError:
+        title = '[error]'
+        url = ''
     pdfs.append(Pdf(file, title, url))
 
+#pdfs.sort(key=lambda pdf: pdf.file)
 rows = '\n'.join(
     ('\n'.join([
         '    <tr>',
