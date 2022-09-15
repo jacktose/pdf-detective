@@ -33,7 +33,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git commit -m 'auto-commit updated tarball'
       - name: check git
-        run |
+        run: |
           git status
           git branch -v
           git remote -v
