@@ -14,8 +14,9 @@ jobs:
       TARBALL_NAME: pdf-detective.tar
     steps:
       - name: Print info
-        run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
-        run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+        run: |
+          echo "The job was automatically triggered by a ${{ github.event_name }} event."
+          echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - name: Print debug info
         run: |
           echo "github.event: ${{ github.event }}"
