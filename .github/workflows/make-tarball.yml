@@ -32,6 +32,11 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git commit -m 'auto-commit updated tarball'
+      - name: check git
+        run |
+          git status
+          git branch -v
+          git remote -v
       - name: Push to branch
         run: git push origin ${{ github.ref }}
       - run: echo "This job's status is ${{ job.status }}."
