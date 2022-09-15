@@ -43,6 +43,7 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         run: git push origin +HEAD:${{ github.head_ref }}
       - name: Push to main
-        if: ${{ github.event_name in ['push', 'workflow_dispatch'] }}
+        #if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
+        if: ${{ contains(fromJson("['push', 'workflow_dispatch']"), github.event_name) }}
         run: git push origin +HEAD:${{ github.ref }}
       - run: echo "This job's status is ${{ job.status }}."
