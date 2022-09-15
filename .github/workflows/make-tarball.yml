@@ -13,9 +13,11 @@ jobs:
     env:
       TARBALL_NAME: pdf-detective.tar
     steps:
-      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - run: |
+      - name: Print info
+        run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+        run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Print debug info
+        run: |
           echo "github.event: ${{ github.event }}"
           echo "github.event_name: ${{ github.event_name }}"
           echo "github.head_ref: ${{ github.head_ref }}"
@@ -47,5 +49,5 @@ jobs:
           git branch -v
           git remote -v
       - name: Push to branch
-        run: git push origin ${{ github.ref }}
+        run: git push origin ${{ github.head_ref }}
       - run: echo "This job's status is ${{ job.status }}."
