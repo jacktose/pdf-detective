@@ -40,6 +40,9 @@ jobs:
           git branch -v
           git remote -v
       - name: Push to branch
-        #run: git push origin +HEAD:${{ github.head_ref }}
+        if: ${{ github.event_name == 'pull_request' }}
+        run: git push origin +HEAD:${{ github.head_ref }}
+      - name: Push to main
+        if: ${{ github.event_name in ['push', 'workflow_dispatch'] }}
         run: git push origin +HEAD:${{ github.ref }}
       - run: echo "This job's status is ${{ job.status }}."
