@@ -15,6 +15,15 @@ jobs:
     steps:
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - run: |
+          echo "github.event: ${{ github.event }}"
+          echo "github.event_name: ${{ github.event_name }}"
+          echo "github.head_ref: ${{ github.head_ref }}"
+          echo "github.ref: ${{ github.ref }}"
+          echo "github.ref_name: ${{ github.ref_name }}"
+          echo "github.ref_type: ${{ github.ref_type }}"
+          echo "github.triggering_actor: ${{ github.triggering_actor }}"
+          echo "github.workflow: ${{ github.workflow }}"
       - name: Check out repository code
         uses: actions/checkout@v3
       - name: List files in the repository
@@ -29,7 +38,7 @@ jobs:
         run: git add ${TARBALL_NAME}
       - name: Commit tarball
         run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git commit -m 'auto-commit updated tarball'
       - name: check git
