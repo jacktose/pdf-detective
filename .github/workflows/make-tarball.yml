@@ -1,0 +1,37 @@
+name: Make Tarball
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  Make-tarball:
+    runs-on: ubuntu-latest
+    env:
+      TARBALL_NAME: pdf-detective.tar
+    steps:
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - name: Make tarball
+        run: tar -vcf ${TARBALL_NAME} pdf-detective pdf-detective.py Pipfile
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - name: Stage tarball
+        run: git add ${TARBALL_NAME}
+      - name: Commit tarball
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -m 'auto-commit updated tarball'
+      - name: Push to branch
+        run: git push origin ${{ github.ref }}
+      - run: echo "This job's status is ${{ job.status }}."
